@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eu te amo Sara</title>
+
+  <!-- Fontes do Google (se ficar sem internet, o navegador usa Georgia/Arial) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="icons/icon.png">
+
+  
+</head>
+
+<body>
+  <div id="camada-coracoes" aria-hidden="true"></div>
+
+  <main>
+    <!-- ========== TOPO ========== -->
+    <header class="topo">
+      <h1 class="entrada">Para você, Sara</h1>
+      <p class="entrada" style="--atraso: .35s">Cada foto aqui guarda um pedaço da nossa história.</p>
+
+      <div class="contador entrada" style="--atraso: .7s" aria-label="Tempo que estamos juntos">
+        <div><strong id="c-dias">0</strong><span>dias</span></div>
+        <div><strong id="c-horas">0</strong><span>horas</span></div>
+        <div><strong id="c-min">0</strong><span>minutos</span></div>
+        <div><strong id="c-seg">0</strong><span>segundos</span></div>
+      </div>
+
+      <a class="rolar entrada" style="--atraso: 1.05s" href="#momentos">Ver nossos momentos</a>
+    </header>
+
+    <!-- ========== MOMENTOS ========== -->
+    <section class="momentos" id="momentos">
+
+      <article class="momento">
+        <div class="revelar">
+          <button class="foto" type="button" aria-pressed="false">
+            <img src="imagens/foto1.jpg" alt="Nós dois no nosso primeiro encontro" onerror="this.remove()">
+            <span class="segredo">Eu já sabia, desde aquele dia, que você era especial.</span>
+          </button>
+          <p class="dica">Toque na foto.</p>
+        </div>
+        <div class="texto revelar">
+          <h2>O primeiro encontro</h2>
+          <p>Escreva aqui como foi o começo de tudo: o lugar, o que vocês conversaram, o que você sentiu.</p>
+        </div>
+      </article>
+
+      <article class="momento">
+        <div class="revelar">
+          <button class="foto" type="button" aria-pressed="false">
+            <img src="imagens/foto2.jpg" alt="Nós dois durante a viagem" onerror="this.remove()">
+            <span class="segredo">Qualquer lugar fica melhor com você.</span>
+          </button>
+          <p class="dica">Toque na foto.</p>
+        </div>
+        <div class="texto revelar">
+          <h2>Aquela viagem</h2>
+          <p>Conte uma lembrança engraçada ou especial. Detalhes pequenos, que só vocês dois entendem, valem mais que frases prontas.</p>
+        </div>
+      </article>
+
+      <article class="momento">
+        <div class="revelar">
+          <button class="foto" type="button" aria-pressed="false">
+            <img src="imagens/foto3.jpg" alt="Nós dois em um dia comum" onerror="this.remove()">
+            <span class="segredo">Os dias simples ao seu lado são meus favoritos.</span>
+          </button>
+          <p class="dica">Toque na foto.</p>
+        </div>
+        <div class="texto revelar">
+          <h2>Um dia qualquer</h2>
+          <p>Fale do que você mais gosta na rotina de vocês: o café, a risada, o silêncio confortável.</p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ========== PERGUNTA FINAL ========== -->
+    <section class="final">
+      <h2 class="revelar">Aceita passar o resto da sua vida ao meu lado?</h2>
+      <div class="botoes revelar">
+        <button id="sim" type="button">Sim!</button>
+        <button id="nao" type="button">Não</button>
+      </div>
+      <p id="resposta" role="status"></p>
+    </section>
+  </main>
+
+  <script>
+    /* ===================================================
+       EDITE AQUI: a data em que vocês começaram a namorar
+       formato: ano-mês-dia T hora:minuto:segundo
+       =================================================== */
+    const INICIO = new Date("2026-02-16T00:00:00");
+
+    const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const aleatorio = (min, max) => Math.random() * (max - min) + min;
+
+    /* ---------- 1. Corações subindo no fundo ---------- */
+    const camada = document.getElementById("camada-coracoes");
+
+    function criarCoracaoDeFundo() {
+      const c = document.createElement("span");
+      const duracao = aleatorio(9, 17);
+      c.className = "coracao";
+      c.textContent = "♥";
+      c.style.left = aleatorio(0, 100) + "vw";
+      c.style.fontSize = aleatorio(14, 38) + "px";
+      c.style.animationDuration = duracao + "s";
+      c.style.color = Math.random() > 0.5 ? "var(--rosa)" : "var(--pessego)";
+      camada.appendChild(c);
+      setTimeout(() => c.remove(), duracao * 1000); // limpa depois que sumiu
+    }
+
+    if (!reduzirMovimento) {
+      for (let i = 0; i < 8; i++) setTimeout(criarCoracaoDeFundo, i * 400); // começa já com alguns
+      setInterval(criarCoracaoDeFundo, 900);
+    }
+
+    /* ---------- 2. Corações que explodem ao clicar ---------- */
+    function explodirCoracoes(x, y, quantidade = 7) {
+      if (reduzirMovimento) return;
+      for (let i = 0; i < quantidade; i++) {
+        const c = document.createElement("span");
+        c.className = "estouro";
+        c.textContent = "♥";
+        c.style.left = x + "px";
+        c.style.top = y + "px";
+        c.style.fontSize = aleatorio(14, 30) + "px";
+        c.style.setProperty("--dx", aleatorio(-90, 90) + "px");
+        c.style.setProperty("--dy", aleatorio(-120, 20) + "px");
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 900);
+      }
+    }
+
+    document.addEventListener("pointerdown", (e) => explodirCoracoes(e.clientX, e.clientY));
+
+    /* ---------- 3. Contador de tempo juntos ---------- */
+    function atualizarContador() {
+      const total = Math.floor((Date.now() - INICIO.getTime()) / 1000);
+      document.getElementById("c-dias").textContent  = Math.floor(total / 86400);
+      document.getElementById("c-horas").textContent = Math.floor((total % 86400) / 3600);
+      document.getElementById("c-min").textContent   = Math.floor((total % 3600) / 60);
+      document.getElementById("c-seg").textContent   = total % 60;
+    }
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+
+    /* ---------- 4. Textos e fotos que sobem ao aparecer na tela ---------- */
+    const observador = new IntersectionObserver((itens) => {
+      itens.forEach((item) => {
+        if (item.isIntersecting) {
+          item.target.classList.add("visivel");
+          observador.unobserve(item.target); // anima só uma vez
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll(".revelar").forEach((el) => observador.observe(el));
+
+    /* ---------- 5. Foto que revela uma mensagem secreta ---------- */
+    document.querySelectorAll(".foto").forEach((foto) => {
+      foto.addEventListener("click", () => {
+        const aberto = foto.classList.toggle("aberto");
+        foto.setAttribute("aria-pressed", aberto);
+      });
+    });
+
+    /* ---------- 6. Pergunta final: o "Não" foge ---------- */
+    const botaoSim = document.getElementById("sim");
+    const botaoNao = document.getElementById("nao");
+    const resposta = document.getElementById("resposta");
+
+    function fugir() {
+      botaoNao.style.transform = `translate(${aleatorio(-140, 140)}px, ${aleatorio(-50, 50)}px)`;
+    }
+    botaoNao.addEventListener("pointerenter", fugir);
+    botaoNao.addEventListener("focus", fugir);
+    botaoNao.addEventListener("click", fugir);
+
+    botaoSim.addEventListener("click", (e) => {
+      resposta.textContent = "Amém! Eu Te amo ♥";
+      botaoNao.style.display = "none";
+      const caixa = botaoSim.getBoundingClientRect();
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => explodirCoracoes(caixa.left + caixa.width / 2, caixa.top, 14), i * 150);
+      }
+    });
+  </script>
+</body>
+</html>
