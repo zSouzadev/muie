@@ -8,13 +8,11 @@
   <!-- Fontes do Google (se ficar sem internet, o navegador usa Georgia/Arial) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600&family=Barlow+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">  <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="icons/icon.png">
-
+   <link rel="stylesheet" href="https://cdn.cursors-4u.net/cursors/animated/bubbles-ec01c1f3-32.css"
   
 </head>
-
 <body>
   <div id="camada-coracoes" aria-hidden="true"></div>
 
@@ -81,22 +79,128 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
         </div>
         <div class="texto revelar">
           <h2>Um dia qualquer</h2>
-          <p>Fale do que você mais gosta na rotina de vocês: o café, a risada, o silêncio confortável.</p>
+          <p>texto aqui</p>
         </div>
       </article>
 
     </section>
 
-    <!-- ========== PERGUNTA FINAL ========== -->
-    <section class="final">
-      <h2 class="revelar">Aceita passar o resto da sua vida ao meu lado?</h2>
-      <div class="botoes revelar">
-        <button id="sim" type="button">Sim!</button>
-        <button id="nao" type="button">Não</button>
-      </div>
-      <p id="resposta" role="status"></p>
-    </section>
+    <section class="carrossel-secao">
+  <h2 class="revelar">Nossos registros</h2>
+
+  <div class="carrossel revelar" aria-roledescription="carrossel" aria-label="Nossos momentos em fotos e vídeos">
+    <div class="car-janela" tabindex="0">
+
+      <!-- FOTO -->
+      <figure class="car-slide">
+        <img src="fotos/car1.jpg" alt="Descreva a foto aqui" onerror="this.remove()">
+        <figcaption>Legenda da primeira foto</figcaption>
+      </figure>
+
+      <!-- VÍDEO (precisa do botão de som e dos atributos muted e playsinline) -->
+      <figure class="car-slide">
+        <video src="videos/video1.mp4" poster="fotos/car2.jpg" muted playsinline preload="metadata"></video>
+        <button class="car-som" type="button" aria-label="Ativar som">🔇</button>
+        <figcaption>Legenda do vídeo</figcaption>
+      </figure>
+
+      <figure class="car-slide">
+        <img src="fotos/car3.jpg" alt="Descreva a foto aqui" onerror="this.remove()">
+        <figcaption>Legenda da terceira foto</figcaption>
+      </figure>
+
+      <figure class="car-slide">
+        <img src="fotos/car4.jpg" alt="Descreva a foto aqui" onerror="this.remove()">
+        <figcaption>Legenda da quarta foto</figcaption>
+      </figure>
+
+      <figure class="car-slide">
+        <video src="videos/video2.mp4" muted playsinline preload="metadata"></video>
+        <button class="car-som" type="button" aria-label="Ativar som">🔇</button>
+        <figcaption>Legenda do segundo vídeo</figcaption>
+      </figure>
+
+      <button class="car-seta car-ant" type="button" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="car-seta car-prox" type="button" aria-label="Próximo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="car-pontos" aria-hidden="true"></div>
+  </div>
+</section>
+
   </main>
+   
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6 6h2v12H6zM9.5 12l9 6V6z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM14.5 12l-9 6V6z"/></symbol>
+  <symbol id="i-vol" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10z"/><path d="M15.5 8.5a5 5 0 010 7M18 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10z"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ===== PLAYER DE MÚSICA ===== -->
+<aside class="player" id="player" aria-label="Player de música">
+
+  <!-- estado fechado: a "pílula" -->
+  <button class="pilula" id="pilula" type="button" aria-expanded="false" aria-controls="painel">
+    <span class="capa-mini"><img id="capa-mini" alt=""></span>
+    <span class="pilula-texto">
+      <strong id="titulo-mini">Carregando…</strong>
+      <small id="artista-mini">&nbsp;</small>
+    </span>
+    <span class="barras" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+
+  <!-- estado aberto: o painel -->
+  <div class="painel" id="painel" inert>
+    <div class="painel-corpo">
+      <div class="conteudo">
+
+        <div class="cabeca">
+          <div class="capa-grande"><img id="capa-grande" alt=""></div>
+          <div class="info">
+            <span class="tag" id="nome-playlist">Playlist</span>
+            <h3 id="titulo">—</h3>
+            <p id="artista">—</p>
+          </div>
+        </div>
+
+        <div class="tempo-linha">
+          <span id="t-atual">0:00</span>
+          <input class="barra" type="range" id="busca" min="0" max="1000" value="0" step="1" aria-label="Posição da música">
+          <span id="t-total">0:00</span>
+        </div>
+
+        <div class="controles">
+          <button class="btn" id="anterior" type="button" aria-label="Anterior"><svg class="icone"><use href="#i-prev"/></svg></button>
+          <button class="btn grande" id="tocar" type="button" aria-label="Tocar"><svg class="icone"><use href="#i-play"/></svg></button>
+          <button class="btn" id="proxima" type="button" aria-label="Próxima"><svg class="icone"><use href="#i-next"/></svg></button>
+        </div>
+
+        <div class="extras">
+          <div class="volume">
+            <button class="btn mini" id="mudo" type="button" aria-label="Silenciar"><svg class="icone"><use href="#i-vol"/></svg></button>
+            <input class="barra" type="range" id="volume" min="0" max="100" value="60" aria-label="Volume">
+          </div>
+          <button class="btn-lista" id="ver-lista" type="button" aria-expanded="false" aria-controls="lista">
+            <svg class="icone"><use href="#i-lista"/></svg><span>Playlist</span>
+          </button>
+        </div>
+
+        <div class="lista" id="lista">
+          <div class="lista-int"><ol id="faixas"></ol></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</aside>
 
   <script>
     /* ===================================================
@@ -105,7 +209,7 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
        =================================================== */
     const INICIO = new Date("2026-02-16T00:00:00");
 
-    const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduzirMovimento = false;
     const aleatorio = (min, max) => Math.random() * (max - min) + min;
 
     /* ---------- 1. Corações subindo no fundo ---------- */
@@ -146,7 +250,10 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
       }
     }
 
-    document.addEventListener("pointerdown", (e) => explodirCoracoes(e.clientX, e.clientY));
+  document.addEventListener("pointerdown", (e) => {
+  if (e.target.closest(".player")) return; // não solta corações em cima do player
+  explodirCoracoes(e.clientX, e.clientY);
+});
 
     /* ---------- 3. Contador de tempo juntos ---------- */
     function atualizarContador() {
@@ -178,27 +285,442 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
         foto.setAttribute("aria-pressed", aberto);
       });
     });
+(function () {
+  const janela = document.querySelector(".car-janela");
+  if (!janela) return;
 
-    /* ---------- 6. Pergunta final: o "Não" foge ---------- */
-    const botaoSim = document.getElementById("sim");
-    const botaoNao = document.getElementById("nao");
-    const resposta = document.getElementById("resposta");
+  const slides = [...janela.querySelectorAll(".car-slide")];
+  const pontos = document.querySelector(".car-pontos");
+  const n = slides.length;
 
-    function fugir() {
-      botaoNao.style.transform = `translate(${aleatorio(-140, 140)}px, ${aleatorio(-50, 50)}px)`;
+  if (n < 3) {
+    console.warn("O carrossel precisa de pelo menos 3 itens para o loop infinito.");
+    return;
+  }
+
+  const TEMPO_FOTO = 4500; // quanto tempo cada foto fica na tela (ms)
+  const DURACAO = 800;     // mesmo valor da transição do CSS (.8s)
+  const TEMPO_MAX_VIDEO = 30000;
+  const reduzirMov = false;
+
+  let atual = 0;
+  let timer = null;
+  let ocupado = false;
+  let posAnterior = slides.map((_, i) => deslocamento(i));
+
+  // um ponto indicador para cada item
+  slides.forEach(() => pontos.appendChild(document.createElement("span")));
+
+  /* Posição de cada item em relação ao atual: 0 = visível, -1 = à esquerda, 1 = à direita.
+     O "módulo" faz a lista dar a volta, e é isso que cria o loop infinito. */
+  function deslocamento(i) {
+    let d = (i - atual) % n;
+    if (d > n / 2) d -= n;
+    if (d <= -n / 2) d += n;
+    return d;
+  }
+
+  /* Desenha a posição de todos os itens. "arrasto" soma os pixels do dedo/mouse. */
+  function desenhar(arrasto = 0, animar = true) {
+    slides.forEach((slide, i) => {
+      const d = deslocamento(i);
+      // se o item pulou de um lado ao outro (fora da tela), muda sem animar
+      const saltou = Math.abs(d - posAnterior[i]) > 1;
+      slide.style.transition = animar && !saltou ? "" : "none";
+      slide.style.transform = `translateX(calc(${d * 100}% + ${arrasto}px))`;
+      slide.classList.toggle("ativo", d === 0);
+      slide.setAttribute("aria-hidden", d !== 0);
+      posAnterior[i] = d;
+    });
+
+    [...pontos.children].forEach((p, i) => p.classList.toggle("ativo", i === atual));
+  }
+
+  /* ----- vídeos: tocam quando ficam ativos e pausam quando saem ----- */
+  function silenciar(slide) {
+    const video = slide.querySelector("video");
+    const botao = slide.querySelector(".car-som");
+    if (!video) return;
+    video.muted = true;
+    if (botao) {
+      botao.textContent = "🔇";
+      botao.setAttribute("aria-label", "Ativar som");
     }
-    botaoNao.addEventListener("pointerenter", fugir);
-    botaoNao.addEventListener("focus", fugir);
-    botaoNao.addEventListener("click", fugir);
+  }
 
-    botaoSim.addEventListener("click", (e) => {
-      resposta.textContent = "Amém! Eu Te amo ♥";
-      botaoNao.style.display = "none";
-      const caixa = botaoSim.getBoundingClientRect();
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => explodirCoracoes(caixa.left + caixa.width / 2, caixa.top, 14), i * 150);
+  function atualizarVideos() {
+    slides.forEach((slide, i) => {
+      const video = slide.querySelector("video");
+      if (!video) return;
+
+      if (i === atual && !reduzirMov) {
+        video.currentTime = 0;
+        // se o navegador bloquear o play, o item é tratado como uma foto
+        video.play().catch(() => agendar(TEMPO_FOTO));
+      } else {
+        video.pause();
+        silenciar(slide);
       }
     });
+  }
+
+  slides.forEach((slide) => {
+    const video = slide.querySelector("video");
+    if (!video) return;
+
+    // vídeo terminou: passa para o próximo
+    video.addEventListener("ended", () => {
+      if (slides[atual] === slide && !reduzirMov) proximo();
+    });
+
+    // botão de som
+    const botao = slide.querySelector(".car-som");
+    if (botao) {
+      botao.addEventListener("click", () => {
+        video.muted = !video.muted;
+        botao.textContent = video.muted ? "🔇" : "🔊";
+        botao.setAttribute("aria-label", video.muted ? "Ativar som" : "Desativar som");
+      });
+    }
+
+    // quem prefere menos movimento ganha controles para dar play manualmente
+    if (reduzirMov) video.controls = true;
+  });
+
+  /* ----- avanço automático ----- */
+  function agendar(espera) {
+  clearTimeout(timer);
+  if (reduzirMov) return;
+  const video = slides[atual].querySelector("video");
+  // foto: tempo fixo. vídeo: espera ele terminar, com um limite de segurança
+  timer = setTimeout(proximo, espera ?? (video ? TEMPO_MAX_VIDEO : TEMPO_FOTO));
+}
+
+  /* ----- navegação ----- */
+  function ir(passo) {
+    if (ocupado) return;          // evita cliques rápidos demais atropelarem a animação
+    ocupado = true;
+    setTimeout(() => (ocupado = false), DURACAO - 50);
+
+    atual = (atual + passo + n) % n;
+    desenhar(0, true);
+    atualizarVideos();
+    agendar();
+  }
+
+  const proximo = () => ir(1);
+  const anterior = () => ir(-1);
+
+  document.querySelector(".car-prox").addEventListener("click", proximo);
+  document.querySelector(".car-ant").addEventListener("click", anterior);
+
+  janela.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") proximo();
+    if (e.key === "ArrowLeft") anterior();
+  });
+
+  /* ----- arrastar com o dedo ou o mouse ----- */
+  let arrastando = false;
+  let inicioX = 0;
+
+  janela.addEventListener("pointerdown", (e) => {
+    if (ocupado || e.target.closest("button")) return;
+    arrastando = true;
+    inicioX = e.clientX;
+    janela.setPointerCapture(e.pointerId);
+    janela.classList.add("arrastando");
+    clearTimeout(timer);
+  });
+
+  janela.addEventListener("pointermove", (e) => {
+    if (!arrastando) return;
+    desenhar(e.clientX - inicioX, false); // os itens acompanham o dedo
+  });
+
+  function soltar(e) {
+    if (!arrastando) return;
+    arrastando = false;
+    janela.classList.remove("arrastando");
+
+    const dx = e.clientX - inicioX;
+    if (dx < -60) ir(1);            // arrastou para a esquerda: próximo
+    else if (dx > 60) ir(-1);       // arrastou para a direita: anterior
+    else { desenhar(0, true); agendar(); } // arrasto curto: volta ao lugar
+  }
+
+  janela.addEventListener("pointerup", soltar);
+  janela.addEventListener("pointercancel", soltar);
+
+  /* ----- início ----- */
+  desenhar(0, false);
+  atualizarVideos();
+  agendar();
+})();
+
+/* ===================== PLAYER DE MÚSICA ===================== */
+(function () {
+  const NOME_PLAYLIST = "Nossas músicas";
+
+  /* EDITE AQUI: suas músicas.
+     "cores" é opcional: só é usada se não for possível ler as cores da capa. */
+  const FAIXAS = [
+    { titulo: "Nome da música 1", artista: "Artista", src: "musicas/musica1.mp3", capa: "capas/capa1.jpg", cores: ["#3fb4ff", "#6a7bff"] },
+    { titulo: "Nome da música 2", artista: "Artista", src: "musicas/musica2.mp3", capa: "capas/capa2.jpg", cores: ["#ff5fa2", "#ffb36b"] },
+    { titulo: "Nome da música 3", artista: "Artista", src: "musicas/musica3.mp3", capa: "capas/capa3.jpg" }
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const player = $("player");
+  if (!player) return;
+
+  const pilula = $("pilula"), painel = $("painel");
+  const capaMini = $("capa-mini"), capaGrande = $("capa-grande");
+  const tituloMini = $("titulo-mini"), artistaMini = $("artista-mini");
+  const titulo = $("titulo"), artista = $("artista"), nomePlaylist = $("nome-playlist");
+  const busca = $("busca"), tAtual = $("t-atual"), tTotal = $("t-total");
+  const btnTocar = $("tocar"), btnAnt = $("anterior"), btnProx = $("proxima");
+  const btnMudo = $("mudo"), volume = $("volume"), btnLista = $("ver-lista"), faixasEl = $("faixas");
+
+  const audio = new Audio();
+  audio.volume = 0.6;
+  let atual = 0;
+  let buscando = false;
+
+  /* ---------- utilidades ---------- */
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const lim = (v, a, b) => Math.min(b, Math.max(a, v));
+
+  const fmt = (s) => {
+    if (!isFinite(s)) return "0:00";
+    return Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+  };
+
+  // pinta a parte "preenchida" da barra (usa a variável --pct do CSS)
+  const pintar = (input) =>
+    input.style.setProperty("--pct", ((input.value - input.min) / (input.max - input.min)) * 100 + "%");
+
+  // reinicia a animação "entra" (usada na troca de música)
+  function reanimar(el) {
+    el.classList.remove("entra");
+    void el.offsetWidth;
+    el.classList.add("entra");
+  }
+
+  /* ---------- cores da capa → glows ---------- */
+  function rgbParaHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+    const l = (max + min) / 2;
+    if (d === 0) return [0, 0, l];
+    const s = d / (1 - Math.abs(2 * l - 1));
+    let h;
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    return [((h * 60 + 360) % 360) / 360, s, l];
+  }
+
+  const hsl = (h, s, l) => `hsl(${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%)`;
+
+  /* Lê a capa, agrupa os pixels por tom e escolhe as 2 cores mais marcantes. */
+  function extrairCores(url) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const T = 48;
+          const c = document.createElement("canvas");
+          c.width = c.height = T;
+          const ctx = c.getContext("2d", { willReadFrequently: true });
+          ctx.drawImage(img, 0, 0, T, T);
+          const px = ctx.getImageData(0, 0, T, T).data; // dá erro se abrir o site com duplo clique (file://)
+
+          const grupos = Array.from({ length: 18 }, () => ({ peso: 0, h: 0, s: 0, l: 0 }));
+          for (let i = 0; i < px.length; i += 4) {
+            if (px[i + 3] < 200) continue;
+            const [h, s, l] = rgbParaHsl(px[i], px[i + 1], px[i + 2]);
+            if (s < 0.25 || l < 0.18 || l > 0.88) continue;       // ignora cinza, preto e branco
+            const peso = s * (1 - Math.abs(l - 0.5));              // cores vivas valem mais
+            const g = grupos[Math.min(17, Math.floor(h * 18))];
+            g.peso += peso; g.h += h * peso; g.s += s * peso; g.l += l * peso;
+          }
+
+          const ordem = grupos.filter((g) => g.peso > 0).sort((a, b) => b.peso - a.peso);
+          if (!ordem.length) return resolve(null);
+
+          const dist = (a, b) => { const d = Math.abs(a - b); return Math.min(d, 1 - d); };
+          const p = ordem[0];
+          const hp = p.h / p.peso;
+          const S = lim(p.s / p.peso + 0.15, 0.55, 1);
+          const L = lim(p.l / p.peso, 0.5, 0.66);
+          const seg = ordem.find((g) => dist(g.h / g.peso, hp) > 0.1); // segunda cor, de tom diferente
+
+          const c1 = hsl(hp, S, L);
+          const c2 = seg
+            ? hsl(seg.h / seg.peso, lim(seg.s / seg.peso + 0.15, 0.55, 1), lim(seg.l / seg.peso, 0.5, 0.66))
+            : hsl((hp + 0.08) % 1, S, Math.min(L + 0.08, 0.7));
+          resolve([c1, c2]);
+        } catch (e) {
+          resolve(null);
+        }
+      };
+      img.onerror = () => resolve(null);
+      img.src = url;
+    });
+  }
+
+  async function aplicarCores(f, id) {
+    const cores = (await extrairCores(f.capa)) || f.cores || ["#3fb4ff", "#6a7bff"];
+    if (id !== atual) return; // o usuário já trocou de música
+    player.style.setProperty("--glow1", cores[0]);
+    player.style.setProperty("--glow2", cores[1]);
+  }
+
+  /* ---------- carregar uma música ---------- */
+  function carregar(i, tocar = true, animar = true) {
+    atual = (i + FAIXAS.length) % FAIXAS.length;
+    const f = FAIXAS[atual];
+
+    audio.src = f.src;
+    player.classList.remove("tocando");
+    iconeTocar(false);
+
+    tituloMini.textContent = titulo.textContent = f.titulo;
+    artistaMini.textContent = artista.textContent = f.artista;
+    capaMini.style.visibility = capaGrande.style.visibility = "";
+    capaMini.src = capaGrande.src = f.capa;
+
+    busca.value = 0;
+    pintar(busca);
+    tAtual.textContent = tTotal.textContent = "0:00";
+
+    faixasEl.querySelectorAll(".faixa").forEach((b, n) => b.classList.toggle("atual", n === atual));
+    if (animar) document.querySelectorAll(".pilula-texto, .capa-mini, .info, .capa-grande").forEach(reanimar);
+
+    aplicarCores(f, atual);
+    if (tocar) audio.play().catch(esperarInteracao);
+  }
+
+  [capaMini, capaGrande].forEach((img) => (img.onerror = () => (img.style.visibility = "hidden")));
+
+  /* ---------- autoplay ----------
+     Navegadores bloqueiam som antes de o usuário interagir com a página.
+     Se isso acontecer, a música começa no primeiro clique, toque ou tecla. */
+  let aguardando = null;
+
+  function esperarInteracao() {
+    if (aguardando) return;
+    aguardando = (e) => {
+      if (e.target.closest && e.target.closest(".player")) return; // dentro do player, os botões já agem
+      audio.play().catch(() => {});
+    };
+    document.addEventListener("pointerdown", aguardando);
+    document.addEventListener("keydown", aguardando);
+  }
+
+  function pararEspera() {
+    if (!aguardando) return;
+    document.removeEventListener("pointerdown", aguardando);
+    document.removeEventListener("keydown", aguardando);
+    aguardando = null;
+  }
+
+  /* ---------- eventos do áudio ---------- */
+  function iconeTocar(tocando) {
+    btnTocar.querySelector("use").setAttribute("href", tocando ? "#i-pause" : "#i-play");
+    btnTocar.setAttribute("aria-label", tocando ? "Pausar" : "Tocar");
+  }
+
+  audio.addEventListener("play", () => { player.classList.add("tocando"); iconeTocar(true); pararEspera(); });
+  audio.addEventListener("pause", () => { player.classList.remove("tocando"); iconeTocar(false); });
+  audio.addEventListener("loadedmetadata", () => (tTotal.textContent = fmt(audio.duration)));
+  audio.addEventListener("ended", () => carregar(atual + 1));
+
+  audio.addEventListener("timeupdate", () => {
+    if (buscando || !audio.duration) return;
+    busca.value = (audio.currentTime / audio.duration) * 1000;
+    pintar(busca);
+    tAtual.textContent = fmt(audio.currentTime);
+  });
+
+  /* ---------- controles ---------- */
+  btnTocar.addEventListener("click", () => (audio.paused ? audio.play().catch(() => {}) : audio.pause()));
+  btnProx.addEventListener("click", () => carregar(atual + 1));
+  btnAnt.addEventListener("click", () => {
+    if (audio.currentTime > 3) audio.currentTime = 0; // depois de 3s, "anterior" reinicia a música
+    else carregar(atual - 1);
+  });
+
+  /* barra de progresso: clicar ou arrastar leva a música para aquele ponto */
+  busca.addEventListener("pointerdown", () => (buscando = true));
+  window.addEventListener("pointerup", () => (buscando = false));
+  busca.addEventListener("input", () => {
+    pintar(busca);
+    if (audio.duration) tAtual.textContent = fmt((busca.value / 1000) * audio.duration);
+  });
+  busca.addEventListener("change", () => {
+    if (audio.duration) audio.currentTime = (busca.value / 1000) * audio.duration;
+    buscando = false;
+  });
+
+  /* volume */
+  function iconeVolume() {
+    const mudo = audio.muted || audio.volume === 0;
+    btnMudo.querySelector("use").setAttribute("href", mudo ? "#i-mudo" : "#i-vol");
+  }
+  volume.addEventListener("input", () => {
+    audio.volume = volume.value / 100;
+    audio.muted = false;
+    pintar(volume);
+    iconeVolume();
+  });
+  btnMudo.addEventListener("click", () => { audio.muted = !audio.muted; iconeVolume(); });
+
+  /* ---------- abrir/fechar painel e lista ---------- */
+  function abrir(sim) {
+    player.classList.toggle("aberto", sim);
+    pilula.setAttribute("aria-expanded", sim);
+    painel.inert = !sim;
+    if (!sim) {
+      player.classList.remove("lista-aberta");
+      btnLista.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  pilula.addEventListener("click", () => abrir(!player.classList.contains("aberto")));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") abrir(false); });
+  document.addEventListener("pointerdown", (e) => { if (!player.contains(e.target)) abrir(false); }); // clicou fora: fecha
+
+  btnLista.addEventListener("click", () => {
+    const aberta = player.classList.toggle("lista-aberta");
+    btnLista.setAttribute("aria-expanded", aberta);
+  });
+
+  /* ---------- monta a lista de músicas ---------- */
+  FAIXAS.forEach((f, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <button class="faixa" type="button" style="--i:${i}">
+        <span class="num">${i + 1}</span>
+        <img class="faixa-capa" src="${esc(f.capa)}" alt="" onerror="this.style.visibility='hidden'">
+        <span class="faixa-txt"><strong>${esc(f.titulo)}</strong><small>${esc(f.artista)}</small></span>
+        <span class="barras" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>`;
+    li.querySelector("button").addEventListener("click", () => {
+      if (i !== atual) carregar(i);
+      else audio.paused ? audio.play().catch(() => {}) : audio.pause();
+    });
+    faixasEl.appendChild(li);
+  });
+
+  /* ---------- início ---------- */
+  nomePlaylist.textContent = NOME_PLAYLIST;
+  pintar(volume);
+  pintar(busca);
+  abrir(false);
+  carregar(0, true, false);
+})();
+    
   </script>
 </body>
 </html>
