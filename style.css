@@ -792,3 +792,34 @@ main { position: relative; z-index: 1; }
   .player.aberto { width: calc(100vw - 20px); }
   .capa-grande { flex-basis: 76px; width: 76px; }
 }
+/* ---------- aleatório e repetir ---------- */
+.controles { gap: 14px; }
+
+.btn.toggle { position: relative; opacity: .6; }
+.btn.toggle:hover { opacity: 1; }
+
+/* ligado: preenche com as cores da capa e brilha */
+.btn.toggle.ativo {
+  opacity: 1;
+  background: linear-gradient(135deg, var(--glow1), var(--glow2));
+  color: #04121f;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--glow1) 60%, transparent);
+}
+.btn.toggle.ativo:hover { background: linear-gradient(135deg, var(--glow2), var(--glow1)); }
+
+/* número "1" no canto do botão quando está repetindo só a música atual */
+#repetir[data-modo="one"]::after {
+  content: "1";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #04121f;
+  font: italic 700 .8rem/1 var(--p3);
+  transform: skewX(10deg);
+}

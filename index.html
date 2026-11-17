@@ -142,6 +142,8 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
   <symbol id="i-vol" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10z"/><path d="M15.5 8.5a5 5 0 010 7M18 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10z"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   <symbol id="i-lista" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-aleatorio" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-repetir" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
 <!-- ===== PLAYER DE MÚSICA ===== -->
@@ -178,10 +180,16 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
         </div>
 
         <div class="controles">
-          <button class="btn" id="anterior" type="button" aria-label="Anterior"><svg class="icone"><use href="#i-prev"/></svg></button>
-          <button class="btn grande" id="tocar" type="button" aria-label="Tocar"><svg class="icone"><use href="#i-play"/></svg></button>
-          <button class="btn" id="proxima" type="button" aria-label="Próxima"><svg class="icone"><use href="#i-next"/></svg></button>
-        </div>
+  <button class="btn mini toggle" id="aleatorio" type="button" aria-label="Ordem aleatória" aria-pressed="false" title="Ordem aleatória">
+    <svg class="icone"><use href="#i-aleatorio"/></svg>
+  </button>
+  <button class="btn" id="anterior" type="button" aria-label="Anterior"><svg class="icone"><use href="#i-prev"/></svg></button>
+  <button class="btn grande" id="tocar" type="button" aria-label="Tocar"><svg class="icone"><use href="#i-play"/></svg></button>
+  <button class="btn" id="proxima" type="button" aria-label="Próxima"><svg class="icone"><use href="#i-next"/></svg></button>
+  <button class="btn mini toggle" id="repetir" type="button" aria-label="Repetir a playlist" title="Repetir a playlist" data-modo="all">
+    <svg class="icone"><use href="#i-repetir"/></svg>
+  </button>
+</div>
 
         <div class="extras">
           <div class="volume">
@@ -464,9 +472,12 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
   /* EDITE AQUI: suas músicas.
      "cores" é opcional: só é usada se não for possível ler as cores da capa. */
   const FAIXAS = [
-    { titulo: "Nome da música 1", artista: "Artista", src: "musicas/musica1.mp3", capa: "capas/capa1.jpg", cores: ["#3fb4ff", "#6a7bff"] },
-    { titulo: "Nome da música 2", artista: "Artista", src: "musicas/musica2.mp3", capa: "capas/capa2.jpg", cores: ["#ff5fa2", "#ffb36b"] },
-    { titulo: "Nome da música 3", artista: "Artista", src: "musicas/musica3.mp3", capa: "capas/capa3.jpg" }
+    { titulo: "Can't Help Falling In Love (Official Audio)", artista: "Elvis Presley", src: "musicas/musica1.mp3", capa: "capas/capa1.jpg", cores: ["#3fb4ff", "#6a7bff"] },
+    { titulo: "Le Parole Lontane", artista: "Måneskin", src: "musicas/musica2.mp3", capa: "capas/capa2.jpg", cores: ["#ff5fa2", "#ffb36b"] },
+    { titulo: "The World We Knew", artista: "Frank Sinatra", src: "musicas/musica3.mp3", capa: "capas/capa3.jpg" },
+    { titulo: "Just The Two Of Us", artista: "Bill Withers", src: "musicas/musica4.mp3", capa: "capas/capa4.jpg", cores: ["#3fb4ff", "#6a7bff"] },
+    { titulo: "Le Parole Lontane", artista: "Måneskin", src: "musicas/musica5.mp3", capa: "capas/capa5.jpg", cores: ["#ff5fa2", "#ffb36b"] },
+    { titulo: "The World We Knew", artista: "Frank Sinatra", src: "musicas/musica6.mp3", capa: "capas/capa6.jpg" }
   ];
 
   const $ = (id) => document.getElementById(id);
@@ -485,6 +496,26 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
   audio.volume = 0.6;
   let atual = 0;
   let buscando = false;
+    /* ---------- ordem de reprodução (aleatório e repetição) ---------- */
+  const btnAleatorio = $("aleatorio"), btnRepetir = $("repetir");
+
+  let embaralhando = false;
+  let modoRepeticao = "all";                      // "off" = para no fim | "all" = repete a playlist | "one" = repete a música
+  let ordem = FAIXAS.map((_, i) => i);            // ordem em que as músicas vão tocar
+  let posicao = 0;                                // onde estamos dentro dessa ordem
+
+  const MODOS = ["off", "all", "one"];
+  const ROTULOS = { off: "Repetição desligada", all: "Repetir a playlist", one: "Repetir esta música" };
+
+  // sorteia uma ordem nova, deixando a música "primeiro" na frente
+  function gerarOrdem(primeiro) {
+    const resto = FAIXAS.map((_, i) => i).filter((i) => i !== primeiro);
+    for (let i = resto.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [resto[i], resto[j]] = [resto[j], resto[i]];
+    }
+    return [primeiro, ...resto];
+  }
 
   /* ---------- utilidades ---------- */
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -580,6 +611,7 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
   function carregar(i, tocar = true, animar = true) {
     atual = (i + FAIXAS.length) % FAIXAS.length;
     const f = FAIXAS[atual];
+        posicao = ordem.indexOf(atual); // mantém a "posição" certa, mesmo se você clicar numa música da lista
 
     audio.src = f.src;
     player.classList.remove("tocando");
@@ -634,7 +666,7 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
   audio.addEventListener("play", () => { player.classList.add("tocando"); iconeTocar(true); pararEspera(); });
   audio.addEventListener("pause", () => { player.classList.remove("tocando"); iconeTocar(false); });
   audio.addEventListener("loadedmetadata", () => (tTotal.textContent = fmt(audio.duration)));
-  audio.addEventListener("ended", () => carregar(atual + 1));
+    audio.addEventListener("ended", () => proxima(true)); // true = terminou sozinha
 
   audio.addEventListener("timeupdate", () => {
     if (buscando || !audio.duration) return;
@@ -645,10 +677,53 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
 
   /* ---------- controles ---------- */
   btnTocar.addEventListener("click", () => (audio.paused ? audio.play().catch(() => {}) : audio.pause()));
-  btnProx.addEventListener("click", () => carregar(atual + 1));
+    btnProx.addEventListener("click", () => proxima(false));
   btnAnt.addEventListener("click", () => {
-    if (audio.currentTime > 3) audio.currentTime = 0; // depois de 3s, "anterior" reinicia a música
-    else carregar(atual - 1);
+    if (audio.currentTime > 3) { audio.currentTime = 0; return; } // depois de 3s, "anterior" reinicia a música
+    posicao = (posicao - 1 + ordem.length) % ordem.length;
+    carregar(ordem[posicao]);
+  });
+
+  /* vai para a próxima música da ordem atual (sequencial ou embaralhada) */
+  function proxima(auto = false) {
+    let p = posicao + 1;
+
+    if (p >= ordem.length) {                        // chegou ao fim da lista
+      if (auto && modoRepeticao === "off") {        // repetição desligada: para no fim
+        carregar(ordem[0], false);
+        return;
+      }
+      if (embaralhando) {                           // novo ciclo: sorteia de novo
+        ordem = gerarOrdem(atual);
+        p = ordem.length > 1 ? 1 : 0;
+      } else {
+        p = 0;
+      }
+    }
+    carregar(ordem[p]);
+  }
+
+  /* botão aleatório */
+  btnAleatorio.addEventListener("click", () => {
+    embaralhando = !embaralhando;
+    ordem = embaralhando ? gerarOrdem(atual) : FAIXAS.map((_, i) => i);
+    posicao = ordem.indexOf(atual);
+    btnAleatorio.classList.toggle("ativo", embaralhando);
+    btnAleatorio.setAttribute("aria-pressed", embaralhando);
+  });
+
+  /* botão de repetir: cada clique troca para o próximo modo */
+  function aplicarRepeticao() {
+    audio.loop = modoRepeticao === "one";           // "one" usa o loop nativo do áudio, sem falhas entre as repetições
+    btnRepetir.dataset.modo = modoRepeticao;
+    btnRepetir.classList.toggle("ativo", modoRepeticao !== "off");
+    btnRepetir.setAttribute("aria-label", ROTULOS[modoRepeticao]);
+    btnRepetir.title = ROTULOS[modoRepeticao];
+  }
+
+  btnRepetir.addEventListener("click", () => {
+    modoRepeticao = MODOS[(MODOS.indexOf(modoRepeticao) + 1) % MODOS.length];
+    aplicarRepeticao();
   });
 
   /* barra de progresso: clicar ou arrastar leva a música para aquele ponto */
@@ -718,6 +793,7 @@ E a melhor parte para mim foi o trajeto de volta no ônibus: ela dormindo no meu
   pintar(volume);
   pintar(busca);
   abrir(false);
+    aplicarRepeticao();
   carregar(0, true, false);
 })();
     
